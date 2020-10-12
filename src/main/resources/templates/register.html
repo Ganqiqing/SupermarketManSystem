@@ -1,12 +1,82 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>register</title>
+    <script type="text/javascript" th:src="@{/js/jquery-1.11.1.min.js}"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('form').submit(function () {
+                var account = $("#account").val();
+                var password = $("#password").val();
+                var staff_name = $("#staff_name").val();
+                var staff_sex = $("#staff_sex").val();
+                var staff_age = $("#staff_age").val();
+                var phone = $("#phone").val();
+                $.ajax({
+                    url: "/super/registering",
+                    type: "post",
+                    data: {
+                        "account": account,
+                        "password": password,
+                        "staff_name": staff_name,
+                        "staff_sex": staff_sex,
+                        "staff_age": staff_age,
+                        "phone": phone
+                    },
+                    dataType: "json",
+                    success: function (data) {
+                        if ("success" === data.result) {
+                            alert("成功");
+                            window.location.href = "/super/index";
+                        } else {
+                            alert("失败");
+                        }
+                    }
+                })
+                return false;
+            })
+        })
+    </script>
 </head>
 <body>
-<form action="/super/register" method="post">
-
-</form>
+<div>
+    <form action="">
+        <table>
+            <thead>注册</thead>
+            <tbody>
+            <tr>
+                <td>账号：</td>
+                <td><label><input type="text" name="account" id="account"/></label></td>
+            </tr>
+            <tr>
+                <td>密码：</td>
+                <td><label><input type="password" name="password" id="password"/></label></td>
+            </tr>
+            <tr>
+                <td>姓名：</td>
+                <td><label><input type="text" name="staff_name" id="staff_name"/></label></td>
+            </tr>
+            <tr>
+                <td>姓别：</td>
+                <td><label><input type="text" name="staff_sex" id="staff_sex"/></label></td>
+            </tr>
+            <tr>
+                <td>年龄：</td>
+                <td><label><input type="text" name="staff_age" id="staff_age"/></label></td>
+            </tr>
+            <tr>
+                <td>手机：</td>
+                <td><label><input type="text" name="phone" id="phone"/></label></td>
+            </tr>
+            <tr align="center">
+                <td colSpan="2" style=" text-align:center" align="center">
+                    <input align="center" type="submit" value="注册账户"/>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+</div>
 </body>
 </html>
