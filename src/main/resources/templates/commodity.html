@@ -1,10 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
 commodity商品信息
+
+<div>
+    <table align="center" border="1">
+        <tr>
+            <td>id</td>
+            <td>name</td>
+            <td>age</td>
+            <td>level</td>
+            <td>country</td>
+            <td>skill</td>
+            <td>getDate</td>
+            <td colspan="2">操作</td>
+        </tr>
+        <tr th:each="general,gebStatr:${page.list}">
+            <td th:text="${general.id}">id</td>
+            <td th:text="${general.name}">name</td>
+            <td th:text="${general.age}">age</td>
+            <td th:text="${general.level}">level</td>
+            <td th:text="${general.skill}">skill</td>
+            <td th:text="${general.country}">country</td>
+            <td th:text="${general.getdate}">getDate</td>
+            <td><a href="">修改</a></td>
+            <td><a href="">删除</a></td>
+        </tr>
+    </table>
+    <br/>
+    <div align="center">
+        <a th:href="@{/page/index(pageStart=0)}">[首页]</a>
+        <a th:href="@{/page/index(pageStart=${page.pageNum - 1})}">[上一页]</a>
+        <a th:href="@{/page/index(pageStart=${page.pageNum + 1})}">[下一页]</a>
+        <a th:href="@{/page/index(pageStart=${page.pages})}">[末页]</a>
+    </div>
+</div>
 </body>
 </html>

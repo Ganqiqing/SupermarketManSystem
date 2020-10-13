@@ -8,7 +8,20 @@ public class Commodity {
     private Date commodity_date;
     private Integer commodity_price;
     private String commodity_priceCode;
-    private Integer commodity_typeCode;
+    //多对一
+    private Commodity_type commodity_type;
+
+    public Commodity() {
+    }
+
+    public Commodity(Integer commodity_id, String commodity_name, Date commodity_date, Integer commodity_price, String commodity_priceCode, Commodity_type commodity_type) {
+        this.commodity_id = commodity_id;
+        this.commodity_name = commodity_name;
+        this.commodity_date = commodity_date;
+        this.commodity_price = commodity_price;
+        this.commodity_priceCode = commodity_priceCode;
+        this.commodity_type = commodity_type;
+    }
 
     public Integer getCommodity_id() {
         return commodity_id;
@@ -50,12 +63,12 @@ public class Commodity {
         this.commodity_priceCode = commodity_priceCode;
     }
 
-    public Integer getCommodity_typeCode() {
-        return commodity_typeCode;
+    public Commodity_type getCommodity_type() {
+        return commodity_type;
     }
 
-    public void setCommodity_typeCode(Integer commodity_typeCode) {
-        this.commodity_typeCode = commodity_typeCode;
+    public void setCommodity_type(Commodity_type commodity_type) {
+        this.commodity_type = commodity_type;
     }
 
     @Override
@@ -66,7 +79,7 @@ public class Commodity {
                 ", commodity_date=" + commodity_date +
                 ", commodity_price=" + commodity_price +
                 ", commodity_priceCode='" + commodity_priceCode + '\'' +
-                ", commodity_typeCode=" + commodity_typeCode +
+                ", commodity_type=" + commodity_type +
                 '}';
     }
 }

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--mapper为根元素，namespace指定了命名空间-->
+<mapper namespace="com.demo.mapper.CommodityMapper">
+    <select id="selectAllCom" resultType="commodity" resultMap="commodityMap">
+        select c.commodity_id,
+               c.commodity_name,
+               c.commodity_date,
+               c.commodity_price,
+               c.commodity_priceCode,
+               m.commodity_typeCode,
+               m.commodity_type
+        from commodity c
+        INNER join commodity_type m
+        where c.commodity_typeCode = m.commodity_typeCode
+    </select>
+
+    <resultMap id="commodityMap" type="commodity">
+        <id column="commodity_id" property="commodity_id"/>
+        <result column="commodity_name" property="commodity_name"/>
+        <result column="commodity_date" property="commodity_date"/>
+        <result column="commodity_price" property="commodity_price"/>
+        <result column="commodity_priceCode" property="commodity_priceCode"/>
+
+        <association property="commodity_type" javaType="commodity_type">
+            <id column="commodity_typeCode" property="commodity_typeCode"/>
+            <result column="commodity_type" property="commodity_type"/>
+        </association>
+    </resultMap>
+
+</mapper>

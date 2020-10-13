@@ -12,6 +12,22 @@ public class Staff {
     private Integer limit;
     private Integer state;
 
+    public Staff() {
+    }
+
+    public Staff(Integer staff_id, String account, String password, String staff_name, String staff_sex, Integer staff_age, Integer wages, String phone, Integer limit, Integer state) {
+        this.staff_id = staff_id;
+        this.account = account;
+        this.password = password;
+        this.staff_name = staff_name;
+        this.staff_sex = staff_sex;
+        this.staff_age = staff_age;
+        this.wages = wages;
+        this.phone = phone;
+        this.limit = limit;
+        this.state = state;
+    }
+
     public Integer getStaff_id() {
         return staff_id;
     }
