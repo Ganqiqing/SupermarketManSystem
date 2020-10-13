@@ -4,14 +4,9 @@ import com.demo.pojo.Staff;
 import com.demo.service.StaffService;
 import com.demo.tools.Constatns;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.IncorrectCredentialsException;
-import org.apache.shiro.authc.LockedAccountException;
-import org.apache.shiro.authc.UnknownAccountException;
-import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -31,10 +26,32 @@ public class IndexController {
 
     @RequestMapping(value = "/main")
     public String main(HttpSession session) {
-        if (session.getAttribute(Constatns.STAFF_SESSION) == null) {
-            return "redirect:/super/toLogin";
+        Staff staff = (Staff) session.getAttribute(Constatns.STAFF_SESSION);
+        if (staff != null) {
+            switch (staff.getLimit()) {
+                case 1:
+                    return "main";
+                case 2:
+                    return "cashier";
+                case 3:
+                    return "purchase";
+                case 4:
+                    return "ordinary";
+            }
         }
-        return "main";
+        return "redirect:/super/toLogin";
+
+        /*if (session.getAttribute(Constatns.STAFF_SESSION) == null) {
+            return "redirect:/super/toLogin";
+        } else if (staff.getLimit() == 4) {
+            return "ordinary";
+        } else if (staff.getLimit() == 3) {
+            return "purchase";
+        } else if (staff.getLimit() == 2) {
+            return "cashier";
+        } else {
+            return "main";
+        }*/
     }
 
     @RequestMapping(value = "/toLogin")
@@ -79,7 +96,6 @@ public class IndexController {
         }
         return result;
     }
-
 
     @RequestMapping("/cancellation")
     public String cancellation() {
