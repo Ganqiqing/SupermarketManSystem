@@ -7,4 +7,13 @@
     <insert id="addStaff">
         insert into staff (account,password,staff_name,staff_sex,staff_age,phone)values (#{account},#{password},#{staff_name},#{staff_sex},#{staff_age},#{phone})
     </insert>
+    <select id="loginStaff" parameterType="staff" resultType="staff">
+        select * from staff where account=#{account} and password=#{password}
+    </select>
+    <update id="UpStaState" parameterType="staff">
+        update staff set state=#{state} where staff_id=#{staff_id}
+    </update>
+    <select id="selectAll" resultType="staff">
+        select * from staff
+    </select>
 </mapper>
