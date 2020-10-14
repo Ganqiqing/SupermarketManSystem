@@ -1,11 +1,87 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>ordinary</title>
+    <script type="text/javascript" th:src="@{/js/jquery-1.11.1.min.js}"></script>
+    <script type="text/javascript">
+        $(function () {
+            loadStaffData();
+        })
+
+        function loadStaffData() {
+            $.ajax({
+                url: "/staff/findById",
+                type: "post",
+                dataType: "json",
+                success: function (data) {
+                    $("#staff_id").text(data.staff_id);
+                    $("#account").text(data.account);
+                    $("#password").text(data.password);
+                    $("#staff_name").text(data.staff_name);
+                    $("#staff_sex").text(data.staff_sex);
+                    $("#staff_age").text(data.staff_age);
+                    $("#wages").text(data.wages);
+                    $("#phone").text(data.phone);
+                    $("#update").append("<td colspan='2'>" + "<button onclick='update(" + data.staff_id + ")'>修改</button>" + "</td>")
+                }
+            })
+        }
+        function update(id){
+
+        }
+    </script>
 </head>
 <body>
 ordinary普通员工
 只能查看和自己的信息和修改部分信息
+
+<div align="center">
+    <table border="1">
+        <thead>
+        </thead>
+        <tbody id="staff_ajax">
+        <tr>
+            <td>序号：</td>
+            <td id="staff_id"></td>
+        </tr>
+        <tr>
+            <td>账号：</td>
+            <td id="account"></td>
+        </tr>
+        <tr>
+            <td>密码：</td>
+            <td id="password"></td>
+        </tr>
+        <tr>
+            <td>姓名：</td>
+            <td id="staff_name"></td>
+        </tr>
+        <tr>
+            <td>性别：</td>
+            <td id="staff_sex"></td>
+        </tr>
+        <tr>
+            <td>年龄：</td>
+            <td id="staff_age"></td>
+        </tr>
+        <tr>
+            <td>月薪：</td>
+            <td id="wages"></td>
+        </tr>
+        <tr>
+            <td>电话：</td>
+            <td id="phone"></td>
+        </tr>
+        <tr>
+            <td>权限：</td>
+            <td id="limit"></td>
+        </tr>
+        <tr id="update">
+        </tr>
+
+        </tbody>
+    </table>
+</div>
 </body>
 </html>

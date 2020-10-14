@@ -10,33 +10,33 @@ commodity商品信息
 <div>
     <table align="center" border="1">
         <tr>
-            <td>id</td>
-            <td>name</td>
-            <td>age</td>
-            <td>level</td>
-            <td>country</td>
-            <td>skill</td>
-            <td>getDate</td>
+            <td>getCommodity_id</td>
+            <td>getCommodity_name</td>
+            <td>getCommodity_date</td>
+            <td>getCommodity_price</td>
+            <td>getCommodity_priceCode</td>
+            <td>getCommodity_typeCode</td>
+            <td>getCommodity_type</td>
             <td colspan="2">操作</td>
         </tr>
-        <tr th:each="general,gebStatr:${page.list}">
-            <td th:text="${general.id}">id</td>
-            <td th:text="${general.name}">name</td>
-            <td th:text="${general.age}">age</td>
-            <td th:text="${general.level}">level</td>
-            <td th:text="${general.skill}">skill</td>
-            <td th:text="${general.country}">country</td>
-            <td th:text="${general.getdate}">getDate</td>
+        <tr th:each="commodity,gebStatr:${page.list}">
+            <td th:text="${commodity.getCommodity_id()}">getCommodity_id</td>
+            <td th:text="${commodity.getCommodity_name()}">getCommodity_name</td>
+            <td th:text="${commodity.getCommodity_date()}">getCommodity_date</td>
+            <td th:text="${commodity.getCommodity_price()}">getCommodity_price</td>
+            <td th:text="${commodity.getCommodity_priceCode()}">getCommodity_priceCode</td>
+            <td th:text="${commodity.getCommodity_type().getCommodity_typeCode()}">getCommodity_typeCode</td>
+            <td th:text="${commodity.getCommodity_type().getCommodity_type()}">getCommodity_type</td>
             <td><a href="">修改</a></td>
             <td><a href="">删除</a></td>
         </tr>
     </table>
     <br/>
     <div align="center">
-        <a th:href="@{/page/index(pageStart=0)}">[首页]</a>
-        <a th:href="@{/page/index(pageStart=${page.pageNum - 1})}">[上一页]</a>
-        <a th:href="@{/page/index(pageStart=${page.pageNum + 1})}">[下一页]</a>
-        <a th:href="@{/page/index(pageStart=${page.pages})}">[末页]</a>
+        <a th:href="@{/commodity/selectAll(pageStart=0)}">[首页]</a>
+        <a th:href="@{/commodity/selectAll(pageStart=${page.pageNum - 1})}">[上一页]</a>
+        <a th:href="@{/commodity/selectAll(pageStart=${page.pageNum + 1})}">[下一页]</a>
+        <a th:href="@{/commodity/selectAll(pageStart=${page.pages})}">[末页]</a>
     </div>
 </div>
 </body>

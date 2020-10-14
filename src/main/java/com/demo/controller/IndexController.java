@@ -3,8 +3,6 @@ package com.demo.controller;
 import com.demo.pojo.Staff;
 import com.demo.service.StaffService;
 import com.demo.tools.Constatns;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +22,10 @@ public class IndexController {
         return "index";
     }
 
+    /*
+     * 登录账号(判断session中有无用户)
+     * 根据不同权限去往不同页面
+     * */
     @RequestMapping(value = "/main")
     public String main(HttpSession session) {
         Staff staff = (Staff) session.getAttribute(Constatns.STAFF_SESSION);
@@ -40,35 +42,36 @@ public class IndexController {
             }
         }
         return "redirect:/super/toLogin";
-
-        /*if (session.getAttribute(Constatns.STAFF_SESSION) == null) {
-            return "redirect:/super/toLogin";
-        } else if (staff.getLimit() == 4) {
-            return "ordinary";
-        } else if (staff.getLimit() == 3) {
-            return "purchase";
-        } else if (staff.getLimit() == 2) {
-            return "cashier";
-        } else {
-            return "main";
-        }*/
     }
 
+    /*
+     * 前往登录页面
+     * */
     @RequestMapping(value = "/toLogin")
     public String toLogin() {
         return "login";
     }
 
+    /*
+     * 没有权限的页面（现在尚未关联）
+     * */
     @RequestMapping("/noPermission")
     @ResponseBody
     public String noPermission() {
         return "noPermission";
     }
 
+    /*
+     * 实现用户登录，访问数据库并判断
+     * */
     @RequestMapping(value = "/doLogin")
     public String doLogin(Staff staff, HttpSession session, HttpServletRequest request) {
         Staff staff1 = staffService.loginStaff(staff);
         if (staff1 != null && staff1.getState() == 0) {
+            /*
+             * 判断用户状态 为0是未登录，1为登录
+             * 状态为0时可登录，1不可以
+             * */
             session.setAttribute(Constatns.STAFF_SESSION, staff1);
             staff1.setState(1);
             staffService.UpStaState(staff1);
@@ -82,11 +85,17 @@ public class IndexController {
         }
     }
 
+    /*
+     * 转向注册页面
+     * */
     @RequestMapping(value = "/toRegister")
     public String toRegister() {
         return "register";
     }
 
+    /*
+     * 注册功能
+     * */
     @RequestMapping(value = "/registering")
     @ResponseBody
     public String registering(Staff staff) {
@@ -97,12 +106,4 @@ public class IndexController {
         return result;
     }
 
-    @RequestMapping("/cancellation")
-    public String cancellation() {
-        //创建一个shiro的subject对象
-        Subject subject = SecurityUtils.getSubject();
-        //调用退出方法用于清空登录时的缓存
-        subject.logout();
-        return "redirect:/super/index";
-    }
 }

@@ -9,3 +9,9 @@ spring:
     password: 19990425
 mybatis:
   type-aliases-package: com.demo.pojo
+#pagehelper分页插件配置 以下属性不加也可以实现分页功能
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql

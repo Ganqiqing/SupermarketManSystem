@@ -15,6 +15,7 @@
         from commodity c
         INNER join commodity_type m
         where c.commodity_typeCode = m.commodity_typeCode
+        order by c.commodity_id
     </select>
 
     <resultMap id="commodityMap" type="commodity">
@@ -23,7 +24,6 @@
         <result column="commodity_date" property="commodity_date"/>
         <result column="commodity_price" property="commodity_price"/>
         <result column="commodity_priceCode" property="commodity_priceCode"/>
-
         <association property="commodity_type" javaType="commodity_type">
             <id column="commodity_typeCode" property="commodity_typeCode"/>
             <result column="commodity_type" property="commodity_type"/>
