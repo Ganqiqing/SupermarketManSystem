@@ -25,6 +25,7 @@ public class IndexController {
     /*
      * 登录账号(判断session中有无用户)
      * 根据不同权限去往不同页面
+     * 跳转好需要修改
      * */
     @RequestMapping(value = "/main")
     public String main(HttpSession session) {

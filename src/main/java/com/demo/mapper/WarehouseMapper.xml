@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--mapper为根元素，namespace指定了命名空间-->
+<mapper namespace="com.demo.mapper.WarehouseMapper">
+    <select id="findAll" resultType="commodity" resultMap="warehouseMap">
+        select c.commodity_name,
+               w.commodity_id,
+               w.number
+        from commodity c
+        INNER join warehouse w
+        where c.commodity_id = w.commodity_id
+        order by c.commodity_id
+    </select>
+
+    <resultMap id="warehouseMap" type="warehouse">
+        <id column="commodity_id" property="commodity_id"/>
+        <result column="number" property="number"/>
+        <association property="commodity" javaType="commodity">
+            <id column="commodity_id" property="commodity_id"/>
+            <result column="commodity_name" property="commodity_name"/>
+        </association>
+    </resultMap>
+</mapper>

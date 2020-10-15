@@ -19,6 +19,11 @@ public class StaffServiceImpl implements StaffService {
     }
 
     @Override
+    public List<Staff> findAll() {
+        return staffMapper.findAll();
+    }
+
+    @Override
     public Staff loginStaff(Staff staff) {
         return staffMapper.loginStaff(staff);
     }

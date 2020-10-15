@@ -7,6 +7,8 @@ import java.util.List;
 public interface StaffService {
     public boolean addStaff(Staff staff);
 
+    public List<Staff> findAll();
+
     public Staff loginStaff(Staff staff);
 
     public boolean UpStaState(Staff staff);

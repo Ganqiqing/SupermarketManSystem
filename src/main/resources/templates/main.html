@@ -3,9 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script type="text/javascript" th:src="@{/js/jquery-1.11.1.min.js}"></script>
+    <script type="text/javascript">
+        $(function () {
+            loadMainData();
+        })
+
+        function loadMainData() {
+            $.ajax({
+                url: "/staff/findAll",
+                type: "post",
+                dataType: "json",
+                success: function (data) {
+                    $("#staff_main").html("");
+                    $.each(data, function (i, n) {
+                        $("#staff_main").append("<tr>")
+                            .append("<td>" + n.staff_id + "</td>")
+                            .append("<td>" + n.account + "</td>")
+                            .append("<td>" + n.password + "</td>")
+                            .append("<td>" + n.staff_name + "</td>")
+                            .append("<td>" + n.staff_sex + "</td>")
+                            .append("<td>" + n.staff_age + "</td>")
+                            .append("<td>" + n.wages + "</td>")
+                            .append("<td>" + n.phone + "</td>")
+                            .append("<td>" + n.limit + "</td>")
+                            .append("<td>" + n.state + "</td>")
+                            .append("<td>" + "<button onclick='update(" + n.id + ")'>下线</button>" + "</td>")
+                            .append("<td>" + "<button onclick='update(" + n.id + ")'>修改</button>" + "</td>")
+                            .append("<td>" + "<button onclick='update(" + n.id + ")'>删除</button>" + "</td>")
+                            .append("</tr>")
+                    })
+                }
+            })
+        }
+    </script>
 </head>
 <body>
 管理员
 查看/修改所有人的信息
+<div align="center">
+    <table border="1">
+        <thead>
+        <tr>
+            <td>staff_id</td>
+            <td>account</td>
+            <td>password</td>
+            <td>staff_name</td>
+            <td>staff_sex</td>
+            <td>staff_age</td>
+            <td>wages</td>
+            <td>phone</td>
+            <td>limit</td>
+            <td>state</td>
+            <td colspan="3">操作</td>
+        </tr>
+        </thead>
+        <tbody id="staff_main">
+
+        </tbody>
+    </table>
+</div>
 </body>
 </html>
