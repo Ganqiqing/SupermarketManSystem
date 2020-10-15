@@ -6,7 +6,6 @@
 <mapper namespace="com.demo.mapper.WarehouseMapper">
     <select id="findAll" resultType="commodity" resultMap="warehouseMap">
         select c.commodity_name,
-               w.commodity_id,
                w.number
         from commodity c
         INNER join warehouse w

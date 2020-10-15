@@ -18,6 +18,10 @@
         order by c.commodity_id
     </select>
 
+    <select id="selectIdAndName" resultType="commodity">
+        select commodity_id,commodity_name from commodity
+    </select>
+
     <resultMap id="commodityMap" type="commodity">
         <id column="commodity_id" property="commodity_id"/>
         <result column="commodity_name" property="commodity_name"/>

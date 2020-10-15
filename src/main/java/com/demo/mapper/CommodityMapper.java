@@ -8,4 +8,6 @@ import java.util.List;
 @Mapper
 public interface CommodityMapper {
     public List<Commodity> selectAllCom();
+
+    public List<Commodity> selectIdAndName();
 }

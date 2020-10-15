@@ -37,7 +37,7 @@ public class IndexController {
                 case 2:
                     return "cashier";
                 case 3:
-                    return "purchase";
+                    return "redirect:/purchase/index";
                 case 4:
                     return "ordinary";
             }

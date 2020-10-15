@@ -17,4 +17,9 @@ public class CommodityServiceImpl implements CommodityService {
     public List<Commodity> selectAllCom() {
         return commodityMapper.selectAllCom();
     }
+
+    @Override
+    public List<Commodity> selectIdAndName() {
+        return commodityMapper.selectIdAndName();
+    }
 }

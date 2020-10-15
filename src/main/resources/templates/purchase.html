@@ -1,11 +1,73 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script type="text/javascript" th:src="@{/js/jquery-1.11.1.min.js}"></script>
+    <script type="text/javascript">
+        $(function () {
+            loadStaffData();
+        })
+
+        function loadStaffData() {
+            $.ajax({
+                url: "/staff/findById",
+                type: "post",
+                dataType: "json",
+                success: function (data) {
+                    $("#staff_id").text(data.staff_id);
+                    $("#staff_name").text(data.staff_name);
+                    $("#phone").text(data.phone);
+                }
+            })
+        }
+    </script>
 </head>
 <body>
 purchase进货员的信息
-进货的信息
+<div>
+    <table border="1">
+        <thead>
+        </thead>
+        <tbody id="staff_ajax">
+        <tr>
+            <td>序号：</td>
+            <td id="staff_id"></td>
+        </tr>
+        <tr>
+            <td>姓名：</td>
+            <td id="staff_name"></td>
+        </tr>
+        <tr>
+            <td>电话：</td>
+            <td id="phone"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<p>进货</p>
+<form action="">
+    <table>
+        <thead>进货</thead>
+
+        <tr>
+            <td>商品名称：</td>
+            <td>
+                <label for="commodity_id"></label>
+                <select id="commodity_id" name="commodity_id">
+                    <option value=""> -- 选择进货商品 --</option>
+                    <option th:each="commodity,listStart:${commodityList}"
+                            th:text="${commodity.getCommodity_name()}"
+                            th:value="${commodity.getCommodity_id()}">
+                    </option>
+                </select>
+            </td>
+            <td>输入数量：</td>
+            <td><label><input type="text" id="number" name="number"></label></td>
+            <td><input type="submit" value="提交"></td>
+        </tr>
+    </table>
+</form>
+
 </body>
 </html>

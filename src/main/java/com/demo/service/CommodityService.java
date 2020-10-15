@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface CommodityService {
     public List<Commodity> selectAllCom();
+
+    public List<Commodity> selectIdAndName();
 }

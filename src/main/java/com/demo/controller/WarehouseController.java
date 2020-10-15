@@ -35,8 +35,6 @@ public class WarehouseController {
     @RequestMapping(value = "/selectAll", method = RequestMethod.POST)
     @ResponseBody
     public List<Warehouse> selectAll() {
-        List<Object> List=new ArrayList<>();
-
         return warehouseService.findAll();
     }
 
