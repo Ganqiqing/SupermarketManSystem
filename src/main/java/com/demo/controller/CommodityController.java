@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
+/**
+ * @author Gan
+ */
 @Controller
 @RequestMapping("/commodity")
 public class CommodityController {

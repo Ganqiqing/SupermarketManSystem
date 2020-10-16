@@ -13,6 +13,10 @@
         order by c.commodity_id
     </select>
 
+    <update id="addNum">
+        update warehouse set number=number+#{number} where commodity_id=#{commodity_id}
+    </update>
+
     <resultMap id="warehouseMap" type="warehouse">
         <id column="commodity_id" property="commodity_id"/>
         <result column="number" property="number"/>

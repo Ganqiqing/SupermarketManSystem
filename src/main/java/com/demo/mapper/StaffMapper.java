@@ -6,6 +6,9 @@ import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
+/**
+ * @author Gan
+ */
 @Mapper
 public interface StaffMapper {
     public boolean addStaff(Staff staff);

@@ -17,4 +17,9 @@ public class WarehouseServiceImpl implements WarehouseService {
     public List<Warehouse> findAll() {
         return warehouseMapper.findAll();
     }
+
+    @Override
+    public boolean addNum(Warehouse warehouse) {
+        return warehouseMapper.addNum(warehouse);
+    }
 }

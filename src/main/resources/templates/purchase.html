@@ -21,6 +21,34 @@
                 }
             })
         }
+
+        $(function () {
+            $('form').submit(function () {
+                var commodity_id = $("#commodity_id").val();
+                var number = $("#number").val();
+                if (number != null) {
+                    number = 0
+                }
+                $.ajax({
+                    url: "/purchase/addNum",
+                    type: "post",
+                    data: {
+                        "commodity_id": commodity_id,
+                        "number": number
+                    },
+                    dataType: "json",
+                    success: function (data) {
+                        if ("success" === data.result) {
+                            alert("添加成功");
+                            window.location.reload();
+                        } else {
+                            alert("添加失败，请稍后再试！");
+                        }
+                    }
+                })
+                return false;
+            })
+        })
     </script>
 </head>
 <body>

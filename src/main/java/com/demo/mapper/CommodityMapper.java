@@ -5,6 +5,9 @@ import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
+/**
+ * @author Gan
+ */
 @Mapper
 public interface CommodityMapper {
     public List<Commodity> selectAllCom();

@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface WarehouseService {
     public List<Warehouse> findAll();
+
+    public boolean addNum(Warehouse warehouse);
 }

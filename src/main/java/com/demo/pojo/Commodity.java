@@ -2,6 +2,9 @@ package com.demo.pojo;
 
 import java.util.Date;
 
+/**
+ * @author Gan
+ */
 public class Commodity {
     private Integer commodity_id;
     private String commodity_name;

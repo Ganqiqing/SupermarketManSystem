@@ -13,6 +13,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author Gan
+ */
 @Controller
 @RequestMapping(value = "/warehouse")
 public class WarehouseController {

@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+/**
+ * @author Gan
+ */
 @Controller
 @RequestMapping(value = "/super")
 public class IndexController {
@@ -40,6 +43,8 @@ public class IndexController {
                     return "redirect:/purchase/index";
                 case 4:
                     return "ordinary";
+                default:
+                    break;
             }
         }
         return "redirect:/super/toLogin";

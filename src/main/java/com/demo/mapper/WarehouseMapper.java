@@ -8,4 +8,6 @@ import java.util.List;
 @Mapper
 public interface WarehouseMapper {
     public List<Warehouse> findAll();
+
+    public boolean addNum(Warehouse warehouse);
 }
