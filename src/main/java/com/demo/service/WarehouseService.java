@@ -8,4 +8,6 @@ public interface WarehouseService {
     public List<Warehouse> findAll();
 
     public boolean addNum(Warehouse warehouse);
+
+    public boolean reduceNum(Warehouse warehouse);
 }

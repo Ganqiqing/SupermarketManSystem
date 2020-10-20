@@ -12,35 +12,35 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
-/**
- * @author Gan
- */
 @Controller
-@RequestMapping(value = "/purchase")
-public class PurchaseController {
-    @Autowired
-    private WarehouseService warehouseService;
-
+@RequestMapping(value = "/cashier")
+public class CashierController {
     @Autowired
     private CommodityService commodityService;
+
+    @Autowired
+    private WarehouseService warehouseService;
 
     @RequestMapping(value = "/index")
     public String index(Model model) {
         List<Commodity> commodityList = commodityService.selectIdAndName();
         model.addAttribute("commodityList", commodityList);
-        return "purchase";
+        return "cashier";
     }
 
-    @RequestMapping(value = "addNum")
+    @RequestMapping(value = "/selectPrice")
     @ResponseBody
-    public String addNum(Warehouse warehouse){
-        System.out.println(warehouse.getCommodity_id());
-        System.out.println(warehouse.getNumber());
+    public Commodity SelPriceById(Integer commodity_id) {
+        return commodityService.selPriceById(commodity_id);
+    }
+
+    @RequestMapping(value = "/sell")
+    @ResponseBody
+    public String Sell(Warehouse warehouse) {
         String result = "{\"result\":\"error\"}";
-        if (warehouseService.addNum(warehouse)) {
+        if (warehouseService.reduceNum(warehouse)) {
             result = "{\"result\":\"success\"}";
         }
         return result;
     }
-
 }

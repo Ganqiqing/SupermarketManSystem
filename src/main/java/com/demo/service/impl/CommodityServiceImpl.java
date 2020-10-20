@@ -22,4 +22,9 @@ public class CommodityServiceImpl implements CommodityService {
     public List<Commodity> selectIdAndName() {
         return commodityMapper.selectIdAndName();
     }
+
+    @Override
+    public Commodity selPriceById(Integer commodity_id) {
+        return commodityMapper.selPriceById(commodity_id);
+    }
 }

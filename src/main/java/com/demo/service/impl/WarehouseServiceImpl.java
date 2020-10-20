@@ -22,4 +22,9 @@ public class WarehouseServiceImpl implements WarehouseService {
     public boolean addNum(Warehouse warehouse) {
         return warehouseMapper.addNum(warehouse);
     }
+
+    @Override
+    public boolean reduceNum(Warehouse warehouse) {
+        return warehouseMapper.reduceNum(warehouse);
+    }
 }

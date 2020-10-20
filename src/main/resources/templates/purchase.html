@@ -26,7 +26,7 @@
             $('form').submit(function () {
                 var commodity_id = $("#commodity_id").val();
                 var number = $("#number").val();
-                if (number != null) {
+                if (number == null) {
                     number = 0
                 }
                 $.ajax({

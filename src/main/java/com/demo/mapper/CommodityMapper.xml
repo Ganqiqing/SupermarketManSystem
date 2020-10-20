@@ -22,6 +22,10 @@
         select commodity_id,commodity_name from commodity
     </select>
 
+    <select id="selPriceById" resultType="commodity">
+        select commodity_price from commodity where commodity_id=#{commodity_id}
+    </select>
+
     <resultMap id="commodityMap" type="commodity">
         <id column="commodity_id" property="commodity_id"/>
         <result column="commodity_name" property="commodity_name"/>

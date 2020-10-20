@@ -38,13 +38,11 @@ public class IndexController {
                 case 1:
                     return "main";
                 case 2:
-                    return "cashier";
+                    return "redirect:/cashier/index";
                 case 3:
                     return "redirect:/purchase/index";
                 case 4:
                     return "ordinary";
-                default:
-                    break;
             }
         }
         return "redirect:/super/toLogin";

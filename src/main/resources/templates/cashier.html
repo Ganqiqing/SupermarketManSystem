@@ -1,11 +1,157 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Cashier</title>
+    <script type="text/javascript" th:src="@{/js/jquery-1.11.1.min.js}"></script>
+    <script type="text/javascript">
+        $(function () {
+            onload();
+        })
+
+        function onload() {
+            for (let i = 1; i <= 20; i++) {
+                $(".select_number").append("<option value='" + i + "'>" + i + "</option>");//新增
+            }
+        }
+
+        function selectNum(one) {
+            var price = $(one).parents("tr").children(".price").text();
+            var count = price * one.value;
+            $(one).parents("tr").children(".count").text(count);
+        }
+
+        function selPriceById(one) {
+            $.ajax({
+                url: "/cashier/selectPrice",
+                data: {
+                    "commodity_id": one.value
+                },
+                type: "post",
+                dataType: "json",
+                success: function (data) {
+                    var a = data.commodity_price
+                    $(one).parents("tr").children(".price").text(a);
+                    $(one).parents("tr").children(".count").text(a);
+                    //$("#select_number > option:eq(1)").attr('selected', true);
+                }
+            })
+
+        }
+
+        function addRow() {
+            /*
+             * 还没有写
+             * 少一个下拉判断语句判断是否已选择下拉否则不给新创建一行
+             * */
+            var row = $("#first").html()
+            $("tr:empty").append(row).after("<tr></tr>")
+        }
+
+        function deleteRow(one) {
+            var first = $("#first");
+            if (one !== first) {
+                $(one).parents("tr").remove();
+            }
+        }
+
+        function CheckOut() {
+            let All = 0;
+            $(".count").each(function () {
+                const a = parseInt($(this).text());
+                All += a;
+            })
+            $("#allPrice").text(parseInt(All))
+
+            var ids = [];
+            $(".commodity_id").each(function () {
+                ids.push(parseInt($(this).val()))
+            })
+
+            var numbers = [];
+            $(".select_number").each(function () {
+                numbers.push(parseInt($(this).val()))
+            })
+
+            /*for (var i = 0; i < ids.length; i++) {
+                alert(ids[i])
+            }*/
+
+
+            for (var i = 0; i < ids.length; i++) {
+                $.ajax({
+                    url: "/cashier/sell",
+                    type: "post",
+                    data: {
+                        "commodity_id": ids[i],
+                        "number": numbers[i]
+                    },
+                    dataType: "json",
+                    success: function (data) {
+                        if ("success" === data.result) {
+                            alert("成")
+                        } else {
+                            alert("删除失败，请稍后再试！");
+                            return false;
+                        }
+                    }
+                })
+            }
+
+        }
+
+    </script>
 </head>
 <body>
-cashier收银员
-查看自己的信息
+<h1>商品</h1>
+<form action="">
+    <table border="1">
+        <thead>
+        <tr>
+            <td>商品</td>
+            <td>数量</td>
+            <td>单价</td>
+            <td>合计</td>
+            <td>操作</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr id="first">
+            <td>
+                <label>
+                    <select class="commodity_id" name="commodity_id" onchange="selPriceById(this)">
+                        <option value=""> -- 选择购买商品 --</option>
+                        <option th:each="commodity,listStart:${commodityList}"
+                                th:text="${commodity.getCommodity_name()}"
+                                th:value="${commodity.getCommodity_id()}">
+                        </option>
+                    </select>
+                </label>
+            </td>
+            <td>
+                <label>
+                    <select name="number" class="select_number" onchange="selectNum(this)">
+                        <!--<option value=""> &#45;&#45; 选择购买数量 &#45;&#45;</option>-->
+                    </select>
+                </label>
+            </td>
+            <td class="price">单价</td>
+            <td class="count">合计</td>
+            <td><input type="button" value="删除" onclick="deleteRow(this)"/></td>
+        </tr>
+        <tr></tr>
+        <tr>
+            <td colspan="5" align="center">
+                <input type="button" value="添加" onclick="addRow()">
+                <input type="button" value="结账" onclick="CheckOut()">
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3" align="center">总价</td>
+            <td id="allPrice" colspan="2" align="left">---</td>
+        </tr>
+        </tbody>
+    </table>
+</form>
 </body>
 </html>
