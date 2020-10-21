@@ -3,11 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style type="text/css">
+        body {
+            width: 100%;
+        }
+
+        #hide-div {
+            position: absolute; /*绝对定位*/
+            width: 500px;
+            height: 400px;
+            border: 1px solid red;
+            background-color: #e7e7e7;
+            display: none;
+        }
+    </style>
     <script type="text/javascript" th:src="@{/js/jquery-1.11.1.min.js}"></script>
     <script type="text/javascript">
         $(function () {
             loadMainData();
         })
+
+        /*
+        * 页面所有元素加载完成后执行
+        * */
+        window.onload = function () {
+            judge()
+        }
+
+
+        function judge() {
+            $(".state").each(function () {
+                if (parseInt($(this).text()) === 0) {
+                    $(this).next().children().first().attr("disabled", true)
+                }
+            })
+        }
 
         function loadMainData() {
             $.ajax({
@@ -27,12 +57,111 @@
                             .append("<td>" + n.wages + "</td>")
                             .append("<td>" + n.phone + "</td>")
                             .append("<td>" + n.limit + "</td>")
-                            .append("<td>" + n.state + "</td>")
-                            .append("<td>" + "<button onclick='update(" + n.id + ")'>下线</button>" + "</td>")
-                            .append("<td>" + "<button onclick='update(" + n.id + ")'>修改</button>" + "</td>")
-                            .append("<td>" + "<button onclick='update(" + n.id + ")'>删除</button>" + "</td>")
+                            .append("<td class='state'>" + n.state + "</td>")
+                            .append("<td class='updateState'>" + "<button onclick='updateState(" + n.staff_id + ")'>下线</button>" + "</td>")
+                            .append("<td>" + "<button onclick='updateById(" + n.staff_id + ")'>修改</button>" + "</td>")
+                            .append("<td>" + "<button onclick='deleteId(" + n.staff_id + ")'>删除</button>" + "</td>")
                             .append("</tr>")
                     })
+                }
+            })
+        }
+
+        function updateState(id) {
+            $.ajax({
+                url: "/main/shutdown",
+                data: {"staff_id": id},
+                dataType: "json",
+                type: "post",
+                success: function (data) {
+                    if ("success" === data.result) {
+                        alert("下线成功")
+                        window.location.reload();
+                    } else {
+                        alert("下线失败，请稍后再试！");
+                    }
+                }
+            })
+        }
+
+        function deleteId(id) {
+            if (confirm("确定要删除么？")) {
+                $.ajax({
+                    url: "/main/deleteById",
+                    data: {"staff_id": id},
+                    dataType: "json",
+                    type: "post",
+                    success: function (data) {
+                        if ("success" === data.result) {
+                            alert("删除成功")
+                            window.location.reload();
+                        } else {
+                            alert("删除失败，请稍后再试！");
+                        }
+                    }
+                })
+            } else {
+            }
+        }
+
+        function updateById(id) {
+            $.ajax({
+                url: "/main/selectById",
+                data: {"staff_id": id},
+                dataType: "json",
+                type: "post",
+                success: function (data) {
+                    $("#staff_id").text(data.staff_id);
+                    $("#account").text(data.account);
+                    $("#password").val(data.password);
+                    $("#staff_name").val(data.staff_name);
+                    if ((data.staff_sex) === "男") {
+                        $('input:radio').eq(1).attr('checked', 'true');
+                    } else {
+                        $('input:radio').eq(0).attr('checked', 'true');
+                    }
+                    $("#staff_age").val(data.staff_age);
+                    $("#wages").val(data.wages);
+                    $("#phone").val(data.phone);
+                    $("#limit").text(data.limit);
+                }
+            })
+
+            $('#hide-div').css('display', 'block')
+                .css('left', "710px")
+            $("#show-div").css('display', 'none')
+        }
+
+        function updateStaff() {
+            const staff_id = $("#staff_id").text();
+            const account = $("#account").text();
+            const password = $("#password").val();
+            const staff_name = $("#staff_name").val();
+            var staff_sex = $('input[name="staff_sex"]:checked').val();
+            const staff_age = $("#staff_age").val();
+            const wages = $("#wages").val();
+            const phone = $("#phone").val();
+            $.ajax({
+                url: "/main/updateById",
+                data: {
+                    "staff_id": staff_id,
+                    "account": account,
+                    "password": password,
+                    "staff_name": staff_name,
+                    "staff_sex": staff_sex,
+                    "staff_age": staff_age,
+                    "wages": wages,
+                    "phone": phone
+                },
+                dataType: "json",
+                type: "post",
+                success: function (data) {
+                    if ("success" === data.result) {
+                        alert("修改成功")
+                        window.location.reload();
+                    } else {
+                        alert("修改失败，请稍后再试！");
+                    }
                 }
             })
         }
@@ -41,7 +170,7 @@
 <body>
 管理员
 查看/修改所有人的信息
-<div align="center">
+<div align="center" id="show-div">
     <table border="1">
         <thead>
         <tr>
@@ -62,6 +191,78 @@
 
         </tbody>
     </table>
+</div>
+<div id="bgDiv"></div>
+
+<div id="hide-div">
+
+    <form action="" id="update-form">
+        <table align="center">
+            <tr>
+                <td>编号：</td>
+                <td id="staff_id"></td>
+            </tr>
+            <tr>
+                <td>账号：</td>
+                <td id="account"></td>
+            </tr>
+            <tr>
+                <td>密码：</td>
+                <td>
+                    <label for="password"></label>
+                    <input type="password" name="password" id="password">
+                </td>
+            </tr>
+            <tr>
+                <td>姓名：</td>
+                <td>
+                    <label for="staff_name"></label>
+                    <input type="text" name="staff_name" id="staff_name">
+                </td>
+            </tr>
+            <tr>
+                <td>性别：</td>
+                <td>
+                    <label>
+                        <input type="radio" name="staff_sex" value="女">
+                    </label>女
+                    <label>
+                        <input type="radio" name="staff_sex" value="男">
+                    </label>男
+                </td>
+            </tr>
+            <tr>
+                <td>年龄：</td>
+                <td>
+                    <label for="staff_age"></label>
+                    <input type="text" name="staff_age" id="staff_age">
+                </td>
+            </tr>
+            <tr>
+                <td>薪水：</td>
+                <td>
+                    <label for="wages"></label>
+                    <input type="text" name="wages" id="wages">
+                </td>
+            </tr>
+            <tr>
+                <td>电话：</td>
+                <td>
+                    <label for="phone"></label>
+                    <input type="text" name="phone" id="phone">
+                </td>
+            </tr>
+            <tr>
+                <td>权限：</td>
+                <td id="limit"></td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <input type="button" value="提交修改" onclick="updateStaff()">
+                </td>
+            </tr>
+        </table>
+    </form>
 </div>
 </body>
 </html>

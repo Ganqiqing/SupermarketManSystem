@@ -7,13 +7,38 @@
     <insert id="addStaff">
         insert into staff (account,password,staff_name,staff_sex,staff_age,phone)values (#{account},#{password},#{staff_name},#{staff_sex},#{staff_age},#{phone})
     </insert>
+
     <select id="loginStaff" parameterType="staff" resultType="staff">
         select * from staff where account=#{account} and password=#{password}
     </select>
+
+    <select id="selectById" resultType="staff">
+        select * from staff where staff_id=#{staff_id}
+    </select>
+
     <update id="UpStaState" parameterType="staff">
         update staff set state=#{state} where staff_id=#{staff_id}
     </update>
+
+    <update id="ShutDown" parameterType="staff">
+        update staff set state=0 where staff_id=#{staff_id}
+    </update>
+
+    <update id="updateById" parameterType="staff">
+        update staff set password=#{password},
+                         staff_name=#{staff_name},
+                         staff_sex=#{staff_sex},
+                         staff_age=#{staff_age},
+                         wages=#{wages},
+                         phone=#{phone}
+                         where staff_id=#{staff_id}
+    </update>
+
     <select id="selectAll" resultType="staff">
         select * from staff
     </select>
+
+    <delete id="deleteById" parameterType="staff">
+        delete from staff where staff_id=#{staff_id}
+    </delete>
 </mapper>

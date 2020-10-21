@@ -24,13 +24,33 @@ public class StaffServiceImpl implements StaffService {
     }
 
     @Override
+    public Staff selectById(Integer staff_id) {
+        return staffMapper.selectById(staff_id);
+    }
+
+    @Override
     public Staff loginStaff(Staff staff) {
         return staffMapper.loginStaff(staff);
     }
 
     @Override
+    public boolean deleteById(Staff staff) {
+        return staffMapper.deleteById(staff);
+    }
+
+    @Override
+    public boolean updateById(Staff staff) {
+        return staffMapper.updateById(staff);
+    }
+
+    @Override
     public boolean UpStaState(Staff staff) {
         return staffMapper.UpStaState(staff);
+    }
+
+    @Override
+    public boolean ShutDown(Staff staff) {
+        return staffMapper.ShutDown(staff);
     }
 
 }

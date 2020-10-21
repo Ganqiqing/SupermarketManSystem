@@ -7,7 +7,20 @@
     <script type="text/javascript">
         $(function () {
             onload();
+            loadStaffData();
         })
+
+        function loadStaffData() {
+            $.ajax({
+                url: "/staff/findById",
+                type: "post",
+                dataType: "json",
+                success: function (data) {
+                    $("#staff_id").text(data.staff_id);
+                    $("#staff_name").text(data.staff_name);
+                }
+            })
+        }
 
         function onload() {
             for (let i = 1; i <= 20; i++) {
@@ -89,11 +102,12 @@
                     dataType: "json",
                     success: function (data) {
                         if ("success" === data.result) {
-                            alert("成")
                         } else {
                             alert("删除失败，请稍后再试！");
                             return false;
                         }
+                        alert("成功");
+                        window.location.reload();
                     }
                 })
             }
@@ -104,6 +118,23 @@
 </head>
 <body>
 <h1>商品</h1>
+<div>
+    <table border="1">
+        <thead>
+        </thead>
+        <tbody id="staff_ajax">
+        <tr>
+            <td>序号：</td>
+            <td id="staff_id"></td>
+        </tr>
+        <tr>
+            <td>姓名：</td>
+            <td id="staff_name"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
 <form action="">
     <table border="1">
         <thead>
