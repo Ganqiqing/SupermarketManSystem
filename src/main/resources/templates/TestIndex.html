@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}">
+    <script th:src="@{/layui/layui.js}"></script>
+</head>
+<body>
+<div id="show">
+    <div id="showhead">
+        <div>商品信息</div>
+    </div>
+    <table id="commodity_table" lay-filter="com_bar"></table>
+</div>
+</body>
+<!--头部工具按钮-->
+<script type="text/html" id="headerBar">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="add">
+            <i class="layui-icon">&#xe608;</i> 新&emsp;增
+        </button>
+        <button class="layui-btn layui-btn-normal layui-btn-sm" lay-event="refresh" style=" margin-left: 15px">
+            <i class="layui-icon">&#xe669;</i> 刷&emsp;新
+        </button>
+        <button class="layui-btn layui-btn-sm layui-btn-primary" lay-event="delete" style=" margin-left: 15px">
+            <i class="layui-icon">&#xe640;</i> 删&emsp;除
+        </button>
+    </div>
+</script>
+
+<!--行工具按钮-->
+<script type="text/html" id="lineBar">
+    <a class="layui-btn layui-btn-xs layui-btn-warm" lay-event="upd">编辑</a>
+    <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del">删除</a>
+</script>
+
+<script type="text/html" id="com_lineBar">
+    <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="show">詳情</a>
+</script>
+
+<script type="text/javascript">
+    layui.use(['table'], function () {
+        var table = layui.table;
+
+        table.render({
+            elem: '#commodity_table',//指定原始 table 容器的选择器或 DOM，方法渲染方式必填
+            id: 'stuReload', //设置容器唯一的id
+            even: true, //开启隔行背景
+            url: '/commodity/laySelect', //异步数据接口相关参数
+            toolbar: '#headerBar',
+            title: '商品详情表',
+            request: {
+                pageName: 'pageNum',//页码的参数名称，默认：page
+                limitName: 'pageSize' //每页数据量的参数名，默认：limit
+            },
+            cellMinWidth: 100,
+            page: true,
+            limit: 5,
+            limits: [1, 5, 10, 20, 50, 100],
+            parseData: function (res) { //res 即为原始返回的数据
+                return {
+                    "code": 0, //解析接口状态
+                    "msg": res.msg, //解析提示文本
+                    "count": res.count, //解析数据长度
+                    "data": res.data
+                };
+            },
+            cols: [
+                [
+                    //TODO
+                    {
+                        type: 'checkbox'
+                    }, {
+                    field: 'commodity_id',
+                    title: '编号',
+                    align: 'center',
+                    sort: 'ture'
+                }, {
+                    field: 'commodity_name',
+                    title: '商品名称',
+                    align: 'center',
+                    sort: 'ture'
+                }, {
+                    field: 'commodity_date',
+                    title: '生产日期',
+                    align: 'center',
+                    sort: 'ture'
+                }, {
+                    field: 'commodity_price',
+                    title: '价&emsp;格',
+                    align: 'center',
+                    sort: 'ture'
+                }, {
+                    field: 'commodity_priceCode',
+                    title: '商品编码',
+                    align: 'center',
+                    sort: 'ture'
+                }, {
+                    field: 'commodity_type.commodity_typeCode',
+                    title: '种类编号',
+                    align: 'center',
+                    sort: 'ture'
+                }, {
+                    field: 'commodity_type.commodity_type',
+                    title: '种类名称',
+                    align: 'center',
+                    sort: 'ture'
+                }, {
+                    fixed: 'right',
+                    title: '操作',
+                    toolbar: '#lineBar',
+                    align: 'center'
+                }, {
+                    fixed: 'right',
+                    width: 165,
+                    align: 'center',
+                    toolbar: '#com_lineBar'
+                }
+                ]
+            ]
+
+        })
+
+        table.on('toolbar(com_bar)', function (obj) {
+            switch (obj.event) {
+                case 'add':
+                    layer.msg('添加');
+                    break;
+                case 'delete':
+                    layer.msg('删除');
+                    break;
+                case 'refresh':
+                    layer.msg('刷新');
+                    break;
+            }
+            ;
+        });
+        table.on('tool(com_bar)', function (obj) {
+            switch (obj.event) {
+                case 'del':
+                    layer.msg('删除');
+                    layer.confirm('真的删除行么', function (index) {
+
+                        obj.del();
+                        layer.close(index);
+                    });
+                    break;
+                case 'upd':
+                    layer.msg('编辑');
+                    break;
+                case 'show':
+                    layer.msg('详情');
+                    break;
+            }
+            ;
+        });
+    })
+</script>
+
+</body>
+</html>

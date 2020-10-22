@@ -1,8 +1,11 @@
 package com.demo.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.demo.mapper.CommodityMapper;
 import com.demo.pojo.Commodity;
 import com.demo.service.CommodityService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +19,24 @@ public class CommodityServiceImpl implements CommodityService {
     @Override
     public List<Commodity> selectAllCom() {
         return commodityMapper.selectAllCom();
+    }
+
+    @Override
+    public JSONObject laySelect(int pageNum, int pageSize) {
+        JSONObject result = new JSONObject();
+        try {
+            PageHelper.startPage(pageNum, pageSize);
+            List<Commodity> commodityList = commodityMapper.selectAllCom();
+            PageInfo<Commodity> pageInfo = new PageInfo<>(commodityList);
+            result.put("code", "0");
+            result.put("msg", "操作成功！");
+            result.put("data", pageInfo.getList());
+            result.put("count", pageInfo.getTotal());
+        } catch (Exception e) {
+            result.put("code", "500");
+            result.put("msg", "查询异常！");
+        }
+        return result;
     }
 
     @Override

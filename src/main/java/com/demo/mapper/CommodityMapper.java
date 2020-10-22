@@ -1,5 +1,6 @@
 package com.demo.mapper;
 
+import com.alibaba.fastjson.JSONObject;
 import com.demo.pojo.Commodity;
 import org.apache.ibatis.annotations.Mapper;
 
