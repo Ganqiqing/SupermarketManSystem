@@ -5,6 +5,7 @@
     <title>Title</title>
     <link rel="stylesheet" th:href="@{/layui/css/layui.css}">
     <script th:src="@{/layui/layui.js}"></script>
+    <script th:src="@{/layui/lay/modules/table.js}"></script>
 </head>
 <body>
 <div id="show">
@@ -97,12 +98,12 @@
                     align: 'center',
                     sort: 'ture'
                 }, {
-                    field: 'commodity_type.commodity_typeCode',
+                    field: 'commodity_typeCode',
                     title: '种类编号',
                     align: 'center',
                     sort: 'ture'
                 }, {
-                    field: 'commodity_type.commodity_type',
+                    field: 'commodity_type',
                     title: '种类名称',
                     align: 'center',
                     sort: 'ture'

@@ -3,12 +3,14 @@ package com.demo.service.impl;
 import com.alibaba.fastjson.JSONObject;
 import com.demo.mapper.CommodityMapper;
 import com.demo.pojo.Commodity;
+import com.demo.pojo.CommodityIndex;
 import com.demo.service.CommodityService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -26,8 +28,8 @@ public class CommodityServiceImpl implements CommodityService {
         JSONObject result = new JSONObject();
         try {
             PageHelper.startPage(pageNum, pageSize);
-            List<Commodity> commodityList = commodityMapper.selectAllCom();
-            PageInfo<Commodity> pageInfo = new PageInfo<>(commodityList);
+            List<CommodityIndex> commodityList = commodityMapper.selectLay();
+            PageInfo<CommodityIndex> pageInfo = new PageInfo<>(commodityList);
             result.put("code", "0");
             result.put("msg", "操作成功！");
             result.put("data", pageInfo.getList());

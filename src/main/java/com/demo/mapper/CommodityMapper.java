@@ -1,7 +1,7 @@
 package com.demo.mapper;
 
-import com.alibaba.fastjson.JSONObject;
 import com.demo.pojo.Commodity;
+import com.demo.pojo.CommodityIndex;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -12,6 +12,8 @@ import java.util.List;
 @Mapper
 public interface CommodityMapper {
     public List<Commodity> selectAllCom();
+
+    public List<CommodityIndex> selectLay();
 
     public List<Commodity> selectIdAndName();
 

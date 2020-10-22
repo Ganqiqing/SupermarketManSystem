@@ -24,7 +24,8 @@ public class CommodityController {
     private CommodityService commodityService;
 
     @RequestMapping(value = "/selectAll")
-    public String selectAll(Model model, @RequestParam(value = "pageStart", defaultValue = "0") int pageStart, @RequestParam(value = "pageSize", defaultValue = "5") int pageSize) {
+    public String selectAll(Model model, @RequestParam(value = "pageStart", defaultValue = "0") int pageStart,
+                            @RequestParam(value = "pageSize", defaultValue = "5") int pageSize) {
         PageHelper.startPage(pageStart, pageSize);
         List<Commodity> commodityList = commodityService.selectAllCom();
         PageInfo<Commodity> pageInfo = new PageInfo<>(commodityList);
@@ -33,13 +34,14 @@ public class CommodityController {
     }
 
     @RequestMapping(value = "/test")
-    public String testIndex(){
+    public String testIndex() {
         return "TestIndex";
     }
 
     @RequestMapping(value = "/laySelect")
     @ResponseBody
-    public JSONObject laySelect(@RequestParam(value = "pageNum", required = false, defaultValue = "1") int pageNum, @RequestParam(value = "pageSize", required = false, defaultValue = "5") int pageSize) {
+    public JSONObject laySelect(@RequestParam(value = "pageNum", required = false, defaultValue = "1") int pageNum,
+                                @RequestParam(value = "pageSize", required = false, defaultValue = "5") int pageSize) {
         return commodityService.laySelect(pageNum, pageSize);
     }
 }

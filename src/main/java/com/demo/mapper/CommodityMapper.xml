@@ -17,6 +17,19 @@
         where c.commodity_typeCode = m.commodity_typeCode
         order by c.commodity_id
     </select>
+    <select id="selectLay" resultType="commodityIndex">
+        select c.commodity_id,
+               c.commodity_name,
+               c.commodity_date,
+               c.commodity_price,
+               c.commodity_priceCode,
+               m.commodity_typeCode,
+               m.commodity_type
+        from commodity c
+        INNER join commodity_type m
+        where c.commodity_typeCode = m.commodity_typeCode
+        order by c.commodity_id
+    </select>
 
     <select id="selectIdAndName" resultType="commodity">
         select commodity_id,commodity_name from commodity
